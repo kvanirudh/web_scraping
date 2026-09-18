@@ -1,8 +1,7 @@
 """
-SIMPLIFIED WEB SCRAPING SCRIPT
-================================
-For Beginners: Extract Population Data for Andhra Pradesh & Telangana
-This version is easier to understand - minimal code, maximum clarity
+WEB SCRAPING SCRIPT
+
+Extract Population Data for Andhra Pradesh & Telangana
 """
 
 # STEP 1: Import the tools we need
@@ -17,7 +16,7 @@ print("=" * 60)
 # ============================================================================
 # STEP 2: Download the webpage
 # ============================================================================
-print("\n1️⃣  DOWNLOADING WEBPAGE...")
+print("\n  DOWNLOADING WEBPAGE...")
 
 url = "https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_population"
 
@@ -31,7 +30,7 @@ print("✓ Downloaded successfully!")
 # ============================================================================
 # STEP 3: Parse the HTML (convert to readable format)
 # ============================================================================
-print("\n2️⃣  PARSING HTML...")
+print("\n  PARSING HTML...")
 
 soup = BeautifulSoup(response.content, 'html.parser')
 print("✓ HTML parsed!")
@@ -39,7 +38,7 @@ print("✓ HTML parsed!")
 # ============================================================================
 # STEP 4: Find the table
 # ============================================================================
-print("\n3️⃣  FINDING THE DATA TABLE...")
+print("\n  FINDING THE DATA TABLE...")
 
 # Find all tables
 tables = soup.find_all('table', {'class': 'wikitable'})
@@ -52,7 +51,7 @@ print("✓ Using first table")
 # ============================================================================
 # STEP 5: Extract headers
 # ============================================================================
-print("\n4️⃣  EXTRACTING HEADERS...")
+print("\n  EXTRACTING HEADERS...")
 
 headers = []
 for th in table.find_all('th'):
@@ -66,7 +65,7 @@ for i, h in enumerate(headers, 1):
 # ============================================================================
 # STEP 6: Extract all rows
 # ============================================================================
-print("\n5️⃣  EXTRACTING DATA ROWS...")
+print("\n  EXTRACTING DATA ROWS...")
 
 all_rows = []
 for tr in table.find_all('tr')[1:]:  # Skip header row
@@ -80,7 +79,7 @@ print(f"✓ Extracted {len(all_rows)} rows")
 # ============================================================================
 # STEP 7: Find our target states
 # ============================================================================
-print("\n6️⃣  SEARCHING FOR TARGET STATES...")
+print("\n SEARCHING FOR TARGET STATES...")
 
 our_states = ['Andhra Pradesh', 'Telangana']
 matching_rows = []
@@ -95,14 +94,14 @@ for row in all_rows:
             print(f"✓ Found: {state_name}")
 
 if len(matching_rows) == 0:
-    print("❌ No states found!")
+    print(" No states found!")
 else:
     print(f"✓ Total found: {len(matching_rows)}")
 
 # ============================================================================
 # STEP 8: Convert to table and save
 # ============================================================================
-print("\n7️⃣  SAVING DATA...")
+print("\n SAVING DATA...")
 
 # Create a nice table (DataFrame)
 df = pd.DataFrame(matching_rows, columns=headers[:len(matching_rows[0])])
@@ -116,6 +115,6 @@ print("=" * 60)
 
 # Save to CSV file
 df.to_csv('AP_Telangana_Population.csv', index=False)
-print("\n💾 File saved: AP_Telangana_Population.csv")
+print("\n File saved: AP_Telangana_Population.csv")
 
-print("\n✅ DONE!")
+print("\n DONE!")
